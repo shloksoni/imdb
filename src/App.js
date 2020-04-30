@@ -1,26 +1,61 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './App.scss';
+import Header from './components/header/header.component';
+import MovieDisplay from './components/movie-display/movie-display.component';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import ViewCards from './components/view-cards/view-cards.component';
+
+
+
+class App extends React.Component{
+  constructor(props){
+    super(props)
+    this.state = {
+      result: [],
+      
+      currentMovie :{}
+      
+    }
+  }
+
+  fireQuery = (event) =>{
+    
+    if(event.which === 13  ){
+      
+      
+       // fetch(`http://localhost:3000/search/${this.state.input}`)
+      fetch(`http://localhost:3000/search?search=${event.target.value}`)
+     
+      .then(res => res.json())
+      .then(data => {
+        
+        this.setState({result : data, currentMovie : {}})
+      
+      })
+      
+    }
+  }
+  showMovie=(id)=>{
+     fetch(`http://localhost:3000/search/${id}`)
+     .then(res => res.json())
+     .then(data => this.setState({currentMovie : data}))
+  }
+  render(){
+    return (
+      <div className="App">
+            <Header handleChange ={this.handleChange} fireQuery = {this.fireQuery} input={this.state.input}/>
+            {
+              Object.keys(this.state.currentMovie).length === 0
+              ? <ViewCards data = {this.state.result} showMovie = {this.showMovie}/>
+              : <MovieDisplay movie = {this.state.currentMovie}/>
+
+            }
+            
+          
+      </div>
+    );
+  }
+
 }
 
 export default App;

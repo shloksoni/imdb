@@ -1,0 +1,38 @@
+$sub-color: grey;
+$main-color: black;
+.header{
+    // overflow: hidden;
+    width: 100%;
+    position: fixed;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    background-color: #282c34;
+    text-align: center;
+    top:0;
+
+    .search-input {
+        background: none;
+        background-color: white;
+        color: $sub-color;
+        font-size: 18px;
+        padding: 10px 10px 10px 5px;
+        display: block;
+        width: 30%;
+        border: none;
+        border-radius: 10px;
+        border-bottom: 1px solid $sub-color;
+
+        
+    
+        &:focus {
+          outline: none;
+        }
+    }
+
+
+}
+
+
+  
